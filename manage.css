@@ -8,10 +8,6 @@ a {
   text-decoration-skip: ink;
 }
 
-#header a:visited {
-  color: #333;
-}
-
 a:hover {
   color: #555;
 }
