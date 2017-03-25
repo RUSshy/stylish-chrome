@@ -3,8 +3,9 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
   <title i18n-text="manageTitle"></title>
-  <link href="manage.css" rel="stylesheet">
-  <link href="msgbox/msgbox.css" rel="stylesheet">
+  <link rel="stylesheet" href="manage.css">
+  <link rel="stylesheet" href="msgbox/msgbox.css">
+  <link rel="stylesheet" href="msgbox/confirm.css">
 
   <template data-id="style">
     <div class="entry">
@@ -115,9 +116,22 @@
 </div>
 <div id="installed"></div>
 
-<script src="manage.js"></script>
+<div id="confirm">
+  <div>
+    <b>Style's Name</b>
+    <span i18n-text="deleteStyleConfirm"></span>
+    <div>
+      <button i18n-text="confirmCancel" data-cmd="cancel"></button>
+      <button i18n-text="confirmDelete" data-cmd="ok"></button>
+    </div>
+  </div>
+</div>
+
 <script src="backup/fileSaveLoad.js"></script>
 <script src="msgbox/msgbox.js"></script>
+<script src="msgbox/confirm.js"></script>
+
+<script src="manage.js"></script>
 
 </body>
 </html>
