@@ -215,14 +215,13 @@ class EntryOnClick {
   }
 
   static update(event) {
-    const element = getClickedStyleElement(event);
-    const updatedCode = element.updatedCode;
+    const updatedCode = getClickedStyleElement(event).updatedCode;
     // update everything but name
-    delete updatedCode.name;
-    updatedCode.id = element.styleId;
-    updatedCode.reason = 'update';
-    saveStyle(updatedCode)
-      .then(style => handleUpdate(style, {reason: 'update'}));
+    saveStyle(Object.assign(updatedCode, {
+      id: element.styleId,
+      name: null,
+      reason: 'update',
+    }));
   }
 
   static delete(event) {
