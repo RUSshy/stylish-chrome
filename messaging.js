@@ -146,20 +146,26 @@ function getTabRealURL(tab) {
 // opens a tab or activates the already opened one,
 // reuses the New Tab page if it's focused now
 function openURL({url, currentWindow = true}) {
+  if (!url) {
+    return;
+  }
   if (!url.includes('://')) {
     url = chrome.runtime.getURL(url);
   }
   return new Promise(resolve => {
-    chrome.tabs.query({url, currentWindow}, tabs => {
-      if (tabs.length) {
-        activateTab(tabs[0]).then(resolve);
-      } else {
-        getActiveTab().then(tab => (
-          tab && tab.url == 'chrome://newtab/'
-            ? chrome.tabs.update({url}, resolve)
-            : chrome.tabs.create({url}, resolve)
-        ));
+    // API doesn't handle the hash-fragment part
+    chrome.tabs.query({url: url.replace(/#.*/, ''), currentWindow}, tabs => {
+      for (const tab of tabs) {
+        if (tab.url == url) {
+          activateTab(tab).then(resolve);
+          return;
+        }
       }
+      getActiveTab().then(tab => (
+        tab && tab.url == 'chrome://newtab/'
+          ? chrome.tabs.update({url}, resolve)
+          : chrome.tabs.create({url}, resolve)
+      ));
     });
   });
 }
